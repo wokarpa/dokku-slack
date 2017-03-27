@@ -6,12 +6,14 @@ source "$(dirname $0)/../common/functions"
 main() {
   local app="$1"
   local hook="$(basename $0)"
-  slack_notify "${app}" "${hook}"
+  local rev="$4"
+  slack_notify "${app}" "${hook}" "${rev}"
 }
 
 slack_notify() {
   local app="$1"
   local hook="$2"
+  local rev="$3"
   local file="${DOKKU_ROOT}/${app}/SLACK_WEBHOOK"
 
   if [[ ! -s "${file}" ]]; then
@@ -19,7 +21,7 @@ slack_notify() {
   fi
 
   local webhook="$(cat "${file}")"
-  local payload="$(slack_payload "${app}" "${hook}")"
+  local payload="$(slack_payload "${app}" "${hook}" "${rev}")"
 
   dokku_log_info1 "Notifying Slack ..."
   curl \
@@ -37,7 +39,7 @@ slack_notify() {
 slack_payload() {
   local app="$1"
   local hook="$2"
-  local rev="$4"
+  local rev="$3"
   local hostname=$(hostname -f)
   cat <<JSON
 {
