@@ -5,7 +5,7 @@ source "$(dirname $0)/../common/functions"
 
 main() {
   local app="$1"
-  local rev="$4"
+  local rev="$2"
   slack_notify "${app}" "${rev}"
 }
 
@@ -38,12 +38,13 @@ slack_payload() {
   local app="$1"
   local rev="$2"
   local hostname=$(hostname -f)
+  local commit=$(git log --format=%B -n 1 ${rev})
 
   cat <<JSON
 {
   "username": "Dokku Deployment (${hostname})",
   "icon_emoji": ":rocket:",
-  "text": "Deploying of a new version of ${app}: revision ${rev}"
+  "text": "Building a new version of ${app}: revision ${rev} (${commit})"
 }
 JSON
 }
