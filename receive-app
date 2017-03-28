@@ -37,12 +37,12 @@ slack_notify() {
 slack_payload() {
   local app="$1"
   local rev="$2"
-  local hostname=$(hostname -f)
+  local hostname=$(hostname)
   local commit=$(git log --format=%B -n 1 ${rev})
 
   cat <<JSON
 {
-  "username": "Dokku Deployment: app ${app} on ${hostname}",
+  "username": "Deploy: ${app}@${hostname}",
   "icon_emoji": ":building_construction:",
   "text": "Building revision ${rev} (${commit})"
 }
