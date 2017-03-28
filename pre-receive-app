@@ -43,7 +43,7 @@ slack_payload() {
 {
   "username": "Dokku Deployment: app ${app} on ${hostname}",
   "icon_emoji": ":rocket:",
-  "text": "Deploying of revision ${rev}"
+  "text": "Deploying revision ${rev}"
 }
 JSON
 }
