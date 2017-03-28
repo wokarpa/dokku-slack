@@ -5,17 +5,13 @@ source "$(dirname $0)/../common/functions"
 
 main() {
   local app="$1"
-  local hook="$(basename $0)"
-  local tmp_work_dir="$3"
-  local rev="$4"
-  slack_notify "${app}" "${hook}" "${tmp_work_dir}" "${rev}"
+  local rev="$2"
+  slack_notify "${app}" "${rev}"
 }
 
 slack_notify() {
   local app="$1"
-  local hook="$2"
-  local tmp_work_dir="$3"
-  local rev="$4"
+  local rev="$2"
   local file="${DOKKU_ROOT}/${app}/SLACK_WEBHOOK"
 
   if [[ ! -s "${file}" ]]; then
@@ -23,7 +19,7 @@ slack_notify() {
   fi
 
   local webhook="$(cat "${file}")"
-  local payload="$(slack_payload "${app}" "${hook}" "${tmp_work_dir}" "${rev}")"
+  local payload="$(slack_payload "${app}" "${rev}")"
 
   dokku_log_info1 "Notifying Slack ..."
   curl \
@@ -40,15 +36,9 @@ slack_notify() {
 
 slack_payload() {
   local app="$1"
-  local hook="$2"
-  local tmp_work_dir="$3"
-  local rev="$4"
+  local rev="$2"
   local hostname=$(hostname -f)
-  local cwd=`pwd`
-
-  cd $tmp_work_dir
   local commit=$(git log --format=%B -n 1 ${rev})
-  cd $cwd
 
   cat <<JSON
 {
