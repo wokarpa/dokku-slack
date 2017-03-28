@@ -40,9 +40,9 @@ slack_payload() {
   local hostname=$(hostname -f)
   cat <<JSON
 {
-  "username": "Dokku Deployment (${hostname})",
-  "icon_emoji": ":rocket:",
-  "text": "Deployed a new version of ${app}"
+  "username": "Dokku Deployment: app ${app} on ${hostname}",
+  "icon_emoji": ":ok:",
+  "text": "Deployed succesfully"
 }
 JSON
 }

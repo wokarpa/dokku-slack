@@ -42,9 +42,9 @@ slack_payload() {
 
   cat <<JSON
 {
-  "username": "Dokku Deployment (${hostname})",
-  "icon_emoji": ":rocket:",
-  "text": "Building a new version of ${app}: revision ${rev} (${commit})"
+  "username": "Dokku Deployment: app ${app} on ${hostname}",
+  "icon_emoji": ":building_construction:",
+  "text": "Building revision ${rev} (${commit})"
 }
 JSON
 }
