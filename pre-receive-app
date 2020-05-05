@@ -35,15 +35,20 @@ slack_notify() {
 }
 
 slack_payload() {
+  local url=$(dokku url $1)
   local app="$1"
   local rev="$2"
   local hostname=$(hostname)
 
   cat <<JSON
 {
-  "username": "Deploy: ${app}@${hostname}",
-  "icon_emoji": ":rocket:",
-  "text": "Deploying revision ${rev}"
+  "attachments": [{
+    "footer": "rev: ${rev}",
+    "text": "Deploying [${app}](${url})",
+    "fallback": "Deploying [${app}](${url})",
+    "color": "#95A3B6",
+    "mrkdwn_in": ["text"]
+  }]
 }
 JSON
 }
