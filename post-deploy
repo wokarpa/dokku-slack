@@ -42,8 +42,8 @@ slack_payload() {
   cat <<JSON
 {
   "attachments": [{
-    "text": "Deployed [${app}](${url})",
-    "fallback": "Deployed [${app}](${url})",
+    "text": "Deployed **${app}** via ${url}",
+    "fallback": "Deployed **${app}** via ${url}",
     "color": "good",
     "mrkdwn_in": ["text"]
   }]

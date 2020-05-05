@@ -44,8 +44,8 @@ slack_payload() {
 {
   "attachments": [{
     "footer": "rev: ${rev}",
-    "text": "Deploying [${app}](${url})",
-    "fallback": "Deploying [${app}](${url})",
+    "text": "Deploying **${app}** via ${url}",
+    "fallback": "Deploying **${app}** via ${url}",
     "color": "#95A3B6",
     "mrkdwn_in": ["text"]
   }]
